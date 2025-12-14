@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manoj Mahara | Professional Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. DESIGN SYSTEM --- */
+        :root {
+            /* Palette */
+            --primary: #2563eb;       /* Royal Blue */
+            --primary-dark: #1e40af;
+            --secondary: #64748b;     /* Slate */
+            --accent: #0ea5e9;        /* Sky Blue */
+            --bg-body: #f8fafc;       /* Very Light Gray */
+            --bg-card: #ffffff;
+            --text-main: #0f172a;     /* Dark Navy */
+            --text-muted: #475569;
+            --border: #e2e8f0;
+            
+            /* Effects */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --glass: rgba(255, 255, 255, 0.9);
+            --radius: 12px;
+            
+            /* Fonts */
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        /* Dark Mode Override */
+        body.dark-mode {
+            --primary: #3b82f6;
+            --primary-dark: #60a5fa;
+            --bg-body: #0f172a;       /* Deep Navy Background */
+            --bg-card: #1e293b;       /* Slate Card */
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --glass: rgba(30, 41, 59, 0.9);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+        }
+
+        /* Global Reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- 2. LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-title {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--border), transparent);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* --- 3. ANIMATIONS (Scroll Reveal) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 4. HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .brand span { color: var(--primary); }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        
+        .nav-links a:hover { color: var(--primary); }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 8px;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .theme-toggle:hover { background: var(--border); }
+
+        /* --- 5. HERO SECTION (Updated with Photo) --- */
+        .hero {
+            padding: 140px 0 100px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* NEW: Profile Photo Styles */
+        .profile-photo-container {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            padding: 5px; /* Border gap */
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--bg-card);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero h1 {
+            font-family: var(--font-head);
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            max-width: 600px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item strong {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: var(--font-head);
+        }
+        
+        .stat-item span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- 6. CARDS & SECTIONS --- */
+        section { padding: 80px 0; }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        /* Objective Box */
+        .objective-box {
+            border-left: 5px solid var(--primary);
+        }
+
+        /* --- 7. TIMELINE (Experience) --- */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-card {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-card::after {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 24px;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-card);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .timeline-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            padding: 4px 12px;
+            background: var(--bg-body);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .timeline-body ul {
+            list-style: none;
+            margin-top: 12px;
+        }
+        
+        .timeline-body li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+        
+        .timeline-body li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* --- 8. SKILLS GRID --- */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .skill-group h3 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* --- 9. EDUCATION TABLE --- */
+        .edu-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+        
+        .edu-table tr {
+            background: var(--bg-card);
+            box-shadow: var(--shadow-sm);
+            transition: 0.2s;
+        }
+        
+        .edu-table tr:hover { transform: scale(1.01); }
+        
+        .edu-table td {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .edu-table td:first-child {
+            border-left: 1px solid var(--border);
+            border-top-left-radius: var(--radius);
+            border-bottom-left-radius: var(--radius);
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .edu-table td:last-child {
+            border-right: 1px solid var(--border);
+            border-top-right-radius: var(--radius);
+            border-bottom-right-radius: var(--radius);
+            text-align: right;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* --- 10. FOOTER --- */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .footer-logo {
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        /* AI Badge */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* Print Styles */
+        @media print {
+            header, .theme-toggle, .btn-no-print { display: none !important; }
+            body { background: white; color: black; }
+            .container { max-width: 100%; padding: 0; }
+            .card { border: none; box-shadow: none; padding: 0; margin-bottom: 20px; }
+            .reveal { opacity: 1 !important; transform: none !important; }
+            a { text-decoration: none; color: black; }
+            .profile-photo-container { box-shadow: none; border: none; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Simplified for mobile */
+            .timeline::before { left: -10px; }
+            .timeline-card::after { left: -18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="brand">Manoj<span>.Dev</span></div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#education">Education</a>
+                </div>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <a href="https://drive.google.com/file/d/1cN_9SNZyoBOMoXmPC618K7gLujD8OPzn/view?usp=drive_link" class="btn-outline btn-no-print" download="Manoj_Mahara_CV.pdf" style="padding: 6px 12px; border-radius: 5px; font-size: 0.9rem;">
+                        <i class="fas fa-download"></i> CV
+                    </a>
+                    
+                    <div class="theme-toggle" id="theme-btn">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero reveal">
+        <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+            
+            <div class="profile-photo-container">
+                <img src="https://drive.google.com/thumbnail?id=13FOWnjkb4zkpzP1R4CDvzth06qb55Elm&sz=w1000" alt="Manoj Mahara" class="profile-photo">
+            </div>
+
+            <div style="display: inline-block; padding: 8px 16px; background: rgba(37, 99, 235, 0.1); color: var(--primary); border-radius: 30px; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px;">
+                Open for Opportunities
+            </div>
+            <h1>MANOJ MAHARA</h1>
+            <p class="subtitle">Computer Engineering Diploma Holder & Practical Instructor bridging the gap between hardware fundamentals and digital efficiency.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="https://drive.google.com/file/d/1cN_9SNZyoBOMoXmPC618K7gLujD8OPzn/view?usp=drive_link" class="btn btn-no-print" download="Manoj_Mahara_CV.pdf">
+                    <i class="fas fa-file-download"></i> Download CV
+                </a>
+                
+                <button onclick="window.print()" class="btn btn-outline btn-no-print">
+                    <i class="fas fa-print"></i> Save Profile as PDF
+                </button>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <strong>3+</strong>
+                    <span>Years Education</span>
+                </div>
+                <div class="stat-item">
+                    <strong>6+</strong>
+                    <span>Months Instruction</span>
+                </div>
+                <div class="stat-item">
+                    <strong>10+</strong>
+                    <span>Tools Mastered</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <h2 class="section-title reveal">About Me</h2>
+        <div class="card objective-box reveal">
+            <p style="font-size: 1.1rem; color: var(--text-muted);">
+                "To grow as a competent business professional by gaining hands-on experience in a challenging environment, contributing value through smart work, discipline, and continuous self-improvement."
+            </p>
+            <p style="margin-top: 15px; font-size: 0.95rem;">
+                Based in <strong style="color: var(--primary);">Kathmandu, Nepal</strong>, I combine a disciplined engineering mindset with the ability to teach and explain complex digital concepts. I am focused on digital skills and smart automation.
+            </p>
+        </div>
+    </section>
+
+    <section id="experience" class="container">
+        <h2 class="section-title reveal">Professional Journey</h2>
+        <div class="timeline">
+            
+            <div class="card timeline-card reveal">
+                <div class="timeline-header">
+                    <div>
+                        <h3>Computer Instructor (Training)</h3>
+                        <span style="color: var(--primary); font-weight: 500;">Good Well Education</span>
+                    </div>
+                    <span class="timeline-date">6 Months Duration</span>
+                </div>
+                <div class="timeline-body">
+                    <ul>
+                        <li>Taught basic computer courses to students.</li>
+                        <li>Provided hands-on training in essential computer operations.</li>
+                        <li>Guided learners to develop foundational digital skills.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card timeline-card reveal">
+                <div class="timeline-header">
+                    <div>
+                        <h3>Computer Course Trainee</h3>
+                        <span style="color: var(--primary); font-weight: 500;">Technical Certification</span>
+                    </div>
+                    <span class="timeline-date">6 Months + 3 Months</span>
+                </div>
+                <div class="timeline-body">
+                    <ul>
+                        <li>Completed basic computer training covering MS Office.</li>
+                        <li>Mastered typing and essential digital tools.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="skills" class="container">
+        <h2 class="section-title reveal">Technical Arsenal</h2>
+        <div class="skills-container">
+            
+            <div class="card skill-group reveal" style="transition-delay: 100ms;">
+                <h3><i class="fas fa-microchip" style="margin-right: 10px; color: var(--accent);"></i>Engineering</h3>
+                <div class="skill-tags">
+                    <span class="tag">Hardware Fundamentals</span>
+                    <span class="tag">Software Fundamentals</span>
+                    <span class="tag">Problem Solving</span>
+                    <span class="tag">Diploma (CTEVT)</span>
+                </div>
+            </div>
+
+            <div class="card skill-group reveal" style="transition-delay: 200ms;">
+                <h3><i class="fas fa-desktop" style="margin-right: 10px; color: var(--accent);"></i>Digital Tools</h3>
+                <div class="skill-tags">
+                    <span class="tag">Office Package</span>
+                    <span class="tag">Google Tools</span>
+                    <span class="tag">Online Research</span>
+                    <span class="tag">Typing</span>
+                </div>
+            </div>
+
+            <div class="card skill-group reveal" style="transition-delay: 300ms;">
+                <h3><i class="fas fa-robot" style="margin-right: 10px; color: var(--accent);"></i>Future Tech</h3>
+                <div class="skill-tags">
+                    <span class="tag">AI Tools Awareness</span>
+                    <span class="tag">Smart Automation</span>
+                    <span class="tag">Website Management</span>
+                    <span class="tag">Fast Learner</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="education" class="container">
+        <h2 class="section-title reveal">Education History</h2>
+        <div class="reveal">
+            <table class="edu-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            Diploma in Computer Engineering
+                            <div style="font-size: 0.8rem; font-weight: 400; margin-top: 5px;"></div>
+                        </td>
+                        <td>2021 - 2024</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            +2 (Higher Secondary)
+                            <div style="font-size: 0.8rem; font-weight: 400; margin-top: 5px;"></div>
+                        </td>
+                        <td>2019 - 2020</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            SEE (School Education Exam)
+                            <div style="font-size: 0.8rem; font-weight: 400; margin-top: 5px;"></div>
+                        </td>
+                        <td>2023 - 2025</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-logo">MANOJ MAHARA</div>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">
+                Disciplined. Practical. Professional.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;">
+                <a href="#" class="btn btn-outline btn-no-print" style="border-radius: 50%; padding: 12px;"><i class="fas fa-envelope"></i></a>
+                <a href="#" class="btn btn-outline btn-no-print" style="border-radius: 50%; padding: 12px;"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); opacity: 0.7;">
+                &copy; <span id="year"></span> Manoj Mahara. All Rights Reserved. <br>
+                <span class="ai-badge"><i class="fas fa-robot"></i> Built with AI Support</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Set Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 2. Dark Mode Toggle
+        const themeBtn = document.getElementById('theme-btn');
+        const icon = themeBtn.querySelector('i');
+        const body = document.body;
+
+        // Check Local Storage
+        if(localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if(body.classList.contains('dark-mode')){
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // 3. Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
